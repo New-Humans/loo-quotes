@@ -88,31 +88,34 @@ $app->get('/post', function() use ($app) {
     $token = getenv("TOKEN");
     $secret = getenv("SECRET");
 
-
     // Create the Tumble object
     $client = new Tumblr\API\Client($consumertoken, $consumerSecret, $token, $secret);
 
     // Get the quote
     $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
 
-    // Replace line breaks in quote with HTML breaks
-    $quote = trim(str_replace("\r\n", "<br>", $quote));
-
     // Get a better quote while the current one is broken
     while (ctype_space($quote) || $quote === "") {
         $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
     }
 
-    // Replace line breaks in quote with HTML breaks
-    $quote = trim(str_replace("\r\n", "<br>", $quote));
+    // Do some fancy finegaling to get the content type we want
+    $formattedQuote = "";
+    foreach(preg_split("/((\r?\n)|(\r\n?))/", $quote) as $quoteLine){
+        if ($quoteLine !== "") {
+            $formattedQuote .= "<p>".$quoteLine."<p>\r\n";
+        } else {
+            $formattedQuote .= "<br />\r\n";
+        }
+    }
 
     // Build the quote post data object
     $post = array(
         'type' => "quote",
         'state' => "queue",
         'tags' => "Lessons of October, Leon Trotsky",
-        'format' => "markdown",
-        'quote' => $quote,
+        'format' => "html",
+        'quote' => $formattedQuote,
         'source' => 'Leon Trotsky\'s <em>Lessons of October</em>, 1924. Text hosted @ <a href="https://junipermcintyre.net/politics/lessons-of-october/read">junipermcintyre.net</a>.'
     );
 
@@ -121,7 +124,7 @@ $app->get('/post', function() use ($app) {
 
     // Done!
     echo "<h2>Queue'd the following:</h2>";
-    echo $quote;
+    echo $formattedQuote;
     return 0;
 });
 
