@@ -65,7 +65,7 @@ $app->get('/', function() use ($app) {
 // LoO generation endpoint
 $app->get('/gen', function() use ($app) {
     // Decide # of lines to retrieve
-    $lineCount = rand(0, 8);
+    $lineCount = rand(1, 8);
 
     // Pass LoO URL and lineCount to generator
     $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", $lineCount);
