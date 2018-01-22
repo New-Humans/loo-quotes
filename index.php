@@ -124,7 +124,7 @@ $app->get('/post', function() use ($app) {
     );
 
     // Queue the post
-    //$client->createPost('loo-quotes.tumblr.com', $post);
+    $client->createPost('loo-quotes.tumblr.com', $post);
 
     // Done!
     echo "<h2>Queue'd the following:</h2>";
