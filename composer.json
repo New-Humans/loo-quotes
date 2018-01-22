@@ -5,6 +5,8 @@
         "symfony/twig-bridge": "~3.3",
         "symfony/http-kernel": "~3.3",
         "symfony/event-dispatcher": "~3.3",
-        "symfony/routing": "~3.3"
+        "symfony/routing": "~3.3",
+        "tumblr/tumblr": "~0.4.0",
+        "vlucas/phpdotenv": "~2.4.0"
     }
 }
