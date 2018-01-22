@@ -12,6 +12,7 @@ error_reporting(E_ALL);*/
 
 /********************************** INITIAL BOOTSTRAP **********************************/
 // Class Inclusions
+use Symfony\Component\HttpFoundation\Request as Request;
 
 // Connect to Composer dependencies
 require_once __DIR__.'/vendor/autoload.php';
@@ -22,6 +23,11 @@ require_once __DIR__.'/functions.php';
 // Create the Silex\Application
 $app = new Silex\Application();
 $app['debug'] = true;
+
+// Load ENV
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+$dotenv->required(['TOKEN', 'SECRET']);
 
 
 
@@ -76,8 +82,45 @@ $app->get('/gen', function() use ($app) {
 
 // LoO homepage, just informational
 $app->get('/post', function() use ($app) {
-    // Read Tumblr API
+    // Get values from ENV
+    $consumertoken = getenv("CONSUMER_TOKEN");
+    $consumerSecret = getenv("CONSUMER_SECRET");
+    $token = getenv("TOKEN");
+    $secret = getenv("SECRET");
 
+
+    // Create the Tumble object
+    $client = new Tumblr\API\Client($consumertoken, $consumerSecret, $token, $secret);
+
+    // Get the quote
+    $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
+
+    // Replace line breaks in quote with HTML breaks
+    $quote = str_replace("\r\n", "<br>", $quote);
+
+    // Call the whole shebang off if the quote is broke
+    if (ctype_space($quote) || $quote === "") {
+        echo "<h2>Empty quote!</h2>";
+        return 1;
+    }
+
+    // Build the quote post data object
+    $post = array(
+        'type' => "quote",
+        'state' => "queue",
+        'tags' => "Lessons of October, Leon Trotsky",
+        'format' => "markdown",
+        'quote' => $quote,
+        'source' => 'Leon Trotsky\'s <em>Lessons of October</em>, 1924. Text hosted @ <a href="https://junipermcintyre.net/politics/lessons-of-october/read">junipermcintyre.net</a>.'
+    );
+
+    // Queue the post
+    $client->createPost('loo-quotes.tumblr.com', $post);
+
+    // Done!
+    echo "<h2>Queue'd the following:</h2>";
+    echo $quote;
+    return 0;
 });
 
 
@@ -87,14 +130,14 @@ $app->get('/debug', function() use ($app) {
 });
 
 // 404!
-$app->error(function (\Exception $e, Request $request, $code) use ($app) {
+/*$app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($code == 404) {
         return $app['twig']->render('404.twig', array (
             'title' => "404 Resource Not Found"
         ));
     } else
         return "{$code} HTTP error! Please inform administrators how this was achieved.";
-});
+});*/
 
 // Run the app - don't delete this!
 $app->run();
