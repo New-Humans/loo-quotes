@@ -1,0 +1,12 @@
+# https://silex.symfony.com/doc/1.3/web_servers.html
+# From the Silex webserver config page
+# Only thing worth customizing is rewrite base - point it at the directory of index.php
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+
+    RewriteEngine On
+    RewriteBase /projects/looquotes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>

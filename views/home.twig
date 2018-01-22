@@ -1,0 +1,26 @@
+{% extends "standard-layout.twig" %}
+
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ global.request.baseUrl ~ '/css/main.css' }}" />
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 text-center">
+            <h1><small><a href="{{ global.request.baseUrl ~ '/' }}">#</a></small> Lessons of October Quotes | Home</h1>
+            <img class="loo-quotes-logo img-thumbnail" src="{{ global.request.baseUrl ~ '/images/loo-quotes-logo.png' }}" alt="Lessons of October Quotes Logo" />
+            <p>Hi!</p>
+            <p>This website is basically just a bot for posting Lessons of October quotes (by Leon Trotsky) to a Tumblr account.</p>
+            <p>Nothing fancy!</p>
+            <p>To see an example of quote generation, visit <a href="{{ global.request.baseUrl ~ '/gen'}}">/gen</a>.</p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block machinecontent %}
+
+{% endblock %}

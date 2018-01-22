@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %}
+            <title>{{ title }}</title>
+            <meta name="description" content="{{ meta }}">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto+Mono" rel="stylesheet">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="{{ global.request.baseUrl ~ '/css/main.css' }}">
+        {% endblock %}
+    </head>
+    <body>
+        <div id="content" class="container">{% block content %}{% endblock %}</div>
+        <div id="machinecontent">{% block machinecontent %}{% endblock %}</div>
+    </body>
+</html>

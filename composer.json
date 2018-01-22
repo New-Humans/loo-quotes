@@ -1,0 +1,10 @@
+{
+    "require": {
+        "silex/silex": "~2.0",
+        "twig/twig": "^2.0",
+        "symfony/twig-bridge": "~3.3",
+        "symfony/http-kernel": "~3.3",
+        "symfony/event-dispatcher": "~3.3",
+        "symfony/routing": "~3.3"
+    }
+}
