@@ -18,7 +18,7 @@ The gen function is mostly contained in functions.php, so it can be called from 
 * `/post`
 
 1. Gets content from `/gen`, or `gen()`
-2. Posts is to the configured Tumblr (using .env)
+2. Post to the configured Tumblr (using .env)
 
 ## Installation & configuration
 
