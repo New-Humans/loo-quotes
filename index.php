@@ -109,6 +109,10 @@ $app->get('/post', function() use ($app) {
         }
     }
 
+    // Strip final whitespace....
+    $formattedQuote = preg_replace('/^\s*(?:<br\s*\/?>\s*)*/i', '', $formattedQuote);   // Get rid of whitespace and <br> tags
+    $formattedQuote = preg_replace('/\s*(?:<br\s*\/?>\s*)*$/i', '', $formattedQuote);   // At beginning and end of string
+
     // Build the quote post data object
     $post = array(
         'type' => "quote",
@@ -120,7 +124,7 @@ $app->get('/post', function() use ($app) {
     );
 
     // Queue the post
-    $client->createPost('loo-quotes.tumblr.com', $post);
+    //$client->createPost('loo-quotes.tumblr.com', $post);
 
     // Done!
     echo "<h2>Queue'd the following:</h2>";
