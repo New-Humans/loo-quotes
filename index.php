@@ -96,13 +96,15 @@ $app->get('/post', function() use ($app) {
     $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
 
     // Replace line breaks in quote with HTML breaks
-    $quote = str_replace("\r\n", "<br>", $quote);
+    $quote = trim(str_replace("\r\n", "<br>", $quote));
 
-    // Call the whole shebang off if the quote is broke
-    if (ctype_space($quote) || $quote === "") {
-        echo "<h2>Empty quote!</h2>";
-        return 1;
+    // Get a better quote while the current one is broken
+    while (ctype_space($quote) || $quote === "") {
+        $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
     }
+
+    // Replace line breaks in quote with HTML breaks
+    $quote = trim(str_replace("\r\n", "<br>", $quote));
 
     // Build the quote post data object
     $post = array(
