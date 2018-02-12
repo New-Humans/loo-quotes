@@ -74,7 +74,7 @@ $app->get('/gen', function() use ($app) {
     $lineCount = rand(1, 8);
 
     // Pass LoO URL and lineCount to generator
-    $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", $lineCount);
+    $quote = gen("https://junipermcintyre.net/library/lessons-of-october/download", $lineCount);
 
     // Return!
     return $quote;
@@ -92,11 +92,11 @@ $app->get('/post', function() use ($app) {
     $client = new Tumblr\API\Client($consumertoken, $consumerSecret, $token, $secret);
 
     // Get the quote
-    $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
+    $quote = gen("https://junipermcintyre.net/library/lessons-of-october/download", rand(1,8));
 
     // Get a better quote while the current one is broken
     while (ctype_space($quote) || $quote === "") {
-        $quote = gen("https://junipermcintyre.net/politics/lessons-of-october/download", rand(1,8));
+        $quote = gen("https://junipermcintyre.net/library/lessons-of-october/download", rand(1,8));
     }
 
     // Do some fancy finegaling to get the content type we want
